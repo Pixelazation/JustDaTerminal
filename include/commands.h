@@ -1,0 +1,12 @@
+void dir(char **args);
+void cd(char **args);
+void mkdir(char **args);
+void rmdir(char **args);
+void del(char **args);
+void touch(char **args);
+void type(char **args);
+void help(char **args);
+void cls(char **args);
+void date(char **args);
+void time(char **args);
+void exit(char **args);
