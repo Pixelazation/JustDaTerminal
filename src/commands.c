@@ -6,7 +6,6 @@
 void print_args(char **args) {
   for (int i = 0; args[i]; i++) {
     printf("arg[%d]: %s\n", i, args[i]);
-    free(args[i]);
   }
 }
 
