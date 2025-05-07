@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "shell.h"
+#include "parser.h"
 
 void shell_init(void) {
   printf("===== Welcome back to JustDaTerminal / JDT =====");
@@ -28,8 +29,15 @@ void shell_loop(void) {
     if (strlen(input) == 0) {
         continue;
     }
+
+    char **args = parse_tokens(input);
     
-    printf("%s\n", input);
+    for (int i = 0; args[i]; i++) {
+      printf("arg[%d]: %s\n", i, args[i]);
+      free(args[i]);
+    }
+    
+    free(args);
   }
 }
 
