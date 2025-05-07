@@ -9,6 +9,8 @@ typedef struct {
 
 ErrorLink error_links[] = {
   {ERR_COMMAND_NOT_FOUND, "Command not found"},
+  {ERR_EXTRA_ARGS, "Too many arguments"},
+  {ERR_LACKING_ARGS, "Too few arguments"},
   {0, "Unknown error"}   // Terminator
 };
 

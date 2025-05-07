@@ -2,11 +2,17 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include "parser.h"
+#include "error_msgs.h"
 
 void print_args(char **args) {
   for (int i = 0; args[i]; i++) {
     printf("arg[%d]: %s\n", i, args[i]);
   }
+}
+
+int count_args(char **args) {
+  return token_count(args) - 1;
 }
 
 int dir(char **args){ 
@@ -76,7 +82,9 @@ int time(char **args){
 }
 
 int exit_terminal(char **args){
-  print_args(args);
-  printf("Running exit\n");
-  return 0;
+  if (count_args(args) > 0) {
+    return ERR_EXTRA_ARGS;
+  }
+
+  return -1;
 }

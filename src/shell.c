@@ -38,21 +38,28 @@ void shell_loop(void) {
     // Dispatch
     int response = dispatch(args);
 
-    if (response != 0) {
-      handle_error(input, response);
-    }
-
     // Free args
     for (int i = 0; args[i]; i++) {
       free(args[i]);
     }
 
     free(args);
+
+    // Exit
+    if (response == -1) {
+      break;
+    }
+
+    // Display Error
+    if (response != 0) {
+      handle_error(input, response);
+    }
+    
   }
 }
 
 void shell_exit(void) {
   printf("\n");
-  printf("See you next time! Press enter to exit...");
+  printf("See you next time! Press enter to close...");
   scanf("a");
 }
