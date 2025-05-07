@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "commands.h"
+#include "error_msgs.h"
 
 typedef int (*command_func)(char **args);
 
@@ -34,5 +35,5 @@ int dispatch(char **args) {
     }
   }
 
-  return -1;
+  return ERR_COMMAND_NOT_FOUND;
 }

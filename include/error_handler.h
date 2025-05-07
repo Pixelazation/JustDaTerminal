@@ -1,0 +1,1 @@
+void handle_error(char *command, int error_code);
