@@ -4,6 +4,7 @@
 #include <string.h>
 #include "shell.h"
 #include "parser.h"
+#include "dispatch.h"
 
 void shell_init(void) {
   printf("===== Welcome back to JustDaTerminal / JDT =====");
@@ -30,13 +31,17 @@ void shell_loop(void) {
         continue;
     }
 
+    // Parse
     char **args = parse_tokens(input);
-    
+
+    // Dispatch
+    dispatch(args);
+
+    // Free args
     for (int i = 0; args[i]; i++) {
-      printf("arg[%d]: %s\n", i, args[i]);
       free(args[i]);
     }
-    
+
     free(args);
   }
 }
