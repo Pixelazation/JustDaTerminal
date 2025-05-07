@@ -13,18 +13,18 @@ typedef struct {
 } CommandLink;
 
 const CommandLink command_links[] = {
-  { "dir", dir },
-  { "cd", cd },
-  { "mkdir", mkdir },
-  { "rmdir", rmdir },
-  { "del", del },
-  { "touch", touch },
-  { "type", type },
-  { "help", help },
-  { "cls", cls },
-  { "date", date },
-  { "time", time },
-  { "exit", exit_terminal },
+  { "dir", cmd_dir },
+  { "cd", cmd_cd },
+  { "mkdir", cmd_mkdir },
+  { "rmdir", cmd_rmdir },
+  { "del", cmd_del },
+  { "touch", cmd_touch },
+  { "type", cmd_type },
+  { "help", cmd_help },
+  { "cls", cmd_cls },
+  { "date", cmd_date },
+  { "time", cmd_time },
+  { "exit", cmd_exit },
   { NULL, NULL } // End signifier
 };
 
