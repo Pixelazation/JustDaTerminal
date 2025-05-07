@@ -4,19 +4,21 @@
 
 #define MAX_TOKENS 64
 
-char **parse_tokens(char *input) {
+char **parse_tokens(const char *input) {
   char **argv = malloc(sizeof(char *) * MAX_TOKENS);
   int argc = 0;
 
-  char *token = strtok(input, " \t\n");
+  char *input_copy = strdup(input);
+  char *token = strtok(input_copy, " \t\n");
 
     while (token != NULL && argc < MAX_TOKENS - 1) {
         argv[argc++] = strdup(token);
         token = strtok(NULL, " \t\n");
     }
 
-    argv[argc] = NULL;
-    return argv;
+  argv[argc] = NULL;
+  free(input_copy);
+  return argv;
 }
 
 int token_count(char** tokens) {
