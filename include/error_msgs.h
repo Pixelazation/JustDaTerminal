@@ -5,5 +5,6 @@
 #define ERR_EXTRA_ARGS 2
 #define ERR_LACKING_ARGS 3
 #define ERR_LOC_NO_EXIST 4
+#define ERR_WRONG_FORMAT 5
 
 #endif

@@ -12,6 +12,7 @@ ErrorLink error_links[] = {
   {ERR_EXTRA_ARGS, "Too many arguments"},
   {ERR_LACKING_ARGS, "Too few arguments"},
   {ERR_LOC_NO_EXIST, "File or directory does not exist"},
+  {ERR_WRONG_FORMAT, "Input is in the wrong format"},
   {0, "Unknown error"}   // Terminator
 };
 

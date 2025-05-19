@@ -5,6 +5,7 @@
 #include <unistd.h> 
 #include <direct.h>
 #include <dirent.h>
+#include <windows.h>
 #include "parser.h"
 #include "error_msgs.h"
 
@@ -165,14 +166,61 @@ int cmd_cls(char **args){
 }
 
 int cmd_date(char **args){
-  print_args(args);
-  printf("Running date\n");
+  if (count_args(args) > 1) {
+    return ERR_EXTRA_ARGS;
+  }
+
+  SYSTEMTIME st;
+  GetLocalTime(&st);
+
+  if (count_args(args) == 0) {
+    printf("%04d-%02d-%02d\n", st.wYear, st.wMonth, st.wDay);
+    return 0;
+  }
+
+  int year, month, day = 0;
+  if (sscanf(args[1], "%d-%d-%d", &year, &month, &day) < 2) {
+    return ERR_WRONG_FORMAT;
+  }
+
+  st.wYear = year;
+  st.wMonth = month;
+  st.wDay = day;
+
+  if (!SetLocalTime(&st)) {
+      return 99;
+  }
+  
   return 0;
 }
 
 int cmd_time(char **args){
-  print_args(args);
-  printf("Running time\n");
+
+  if (count_args(args) > 1) {
+    return ERR_EXTRA_ARGS;
+  }
+
+  SYSTEMTIME st;
+  GetLocalTime(&st);
+
+  if (count_args(args) == 0) {
+    printf("%02d:%02d:%02d\n", st.wHour, st.wMinute, st.wSecond);
+    return 0;
+  }
+
+  int hour, minute, second = 0;
+  if (sscanf(args[1], "%d:%d:%d", &hour, &minute, &second) < 2) {
+    return ERR_WRONG_FORMAT;
+  }
+
+  st.wHour = hour;
+  st.wMinute = minute;
+  st.wSecond = second;
+
+  if (!SetLocalTime(&st)) {
+      return 99;
+  }
+  
   return 0;
 }
 
