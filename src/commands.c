@@ -8,6 +8,23 @@
 #include <windows.h>
 #include "parser.h"
 #include "error_msgs.h"
+#include "commands.h"
+
+const CommandLink command_links[] = {
+  { "dir", cmd_dir, "Lists all files and directories in current directory" },
+  { "cd", cmd_cd, "Change directories" },
+  { "mkdir", cmd_mkdir, "Create a directory" },
+  { "rmdir", cmd_rmdir, "Remove a directory" },
+  { "del", cmd_del, "Delete a file" },
+  { "touch", cmd_touch, "Create a file" },
+  { "type", cmd_type, "Show contents of a file" },
+  { "help", cmd_help, "Show this prompt" },
+  { "cls", cmd_cls, "Clear your screen" },
+  { "date", cmd_date, "Display or update the system date (YYYY-MM-DD)" },
+  { "time", cmd_time, "Display or update the system time (HH:MM:SS)" },
+  { "exit", cmd_exit, "Exit this shell" },
+  { NULL, NULL, NULL } // End signifier
+};
 
 void print_args(char **args) {
   for (int i = 0; args[i]; i++) {
@@ -151,8 +168,18 @@ int cmd_type(char **args){
 }
 
 int cmd_help(char **args){
-  print_args(args);
-  printf("Running help\n");
+  if (count_args(args) > 0) {
+    return ERR_EXTRA_ARGS;
+  }
+
+  printf("\n");
+
+  for (int i = 0; command_links[i].name; i++) {
+    printf("%s \t\t %s\n", command_links[i].name, command_links[i].description);
+  }
+
+  printf("\n");
+
   return 0;
 }
 
