@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <string.h>
 #include <unistd.h> 
+#include <direct.h>
+#include <dirent.h>
 #include "parser.h"
 #include "error_msgs.h"
 
@@ -21,8 +23,33 @@ int cmd_dir(char **args){
     return ERR_EXTRA_ARGS;
   }
 
-  system("pwd");
+  char* curr_dir = getcwd(NULL, 0);
+
+  if (!curr_dir) {
+    return 99;
+  }
+
+  printf("Listing files and directories in \"%s\":\n", curr_dir);
+
+  DIR *dir;
+  struct dirent *entry;
+
+  dir = opendir(".");
+  if (dir == NULL) {
+      perror("opendir");
+      return 1;
+  }
+  
+  while ((entry = readdir(dir)) != NULL) {
+      printf("%s\t\t\t", entry->d_name);
+      printf("\n");
+  }
+
+  printf("\n");
+
+  closedir(dir);
   return 0;
+
 }
 
 int cmd_cd(char **args){
@@ -100,7 +127,7 @@ int cmd_cls(char **args){
     return ERR_EXTRA_ARGS;
   }
 
-  system("clear");
+  printf("\e[1;1H\e[2J");     // RegEx String to add lines equal to terminal height and move cursor to first char
   return 0;
 }
 
