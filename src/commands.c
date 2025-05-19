@@ -39,7 +39,7 @@ int cmd_dir(char **args){
       perror("opendir");
       return 1;
   }
-  
+
   while ((entry = readdir(dir)) != NULL) {
       printf("%s\t\t\t", entry->d_name);
       printf("\n");
@@ -53,7 +53,7 @@ int cmd_dir(char **args){
 }
 
 int cmd_cd(char **args){
-  if (count_args(args) > 2) {
+  if (count_args(args) > 1) {
     return ERR_EXTRA_ARGS;
   }
 
@@ -69,7 +69,7 @@ int cmd_cd(char **args){
 }
 
 int cmd_mkdir(char **args){
-  if (count_args(args) > 2) {
+  if (count_args(args) > 1) {
     return ERR_EXTRA_ARGS;
   }
 
@@ -83,7 +83,7 @@ int cmd_mkdir(char **args){
 }
 
 int cmd_rmdir(char **args){
-  if (count_args(args) > 2) {
+  if (count_args(args) > 1) {
     return ERR_EXTRA_ARGS;
   }
 
@@ -99,20 +99,53 @@ int cmd_rmdir(char **args){
 }
 
 int cmd_del(char **args){
-  print_args(args);
-  printf("Running del\n");
-  return 0;
+  if (count_args(args) < 1) {
+    return ERR_LACKING_ARGS;
+  }
+
+  if (count_args(args) > 1) {
+    return ERR_EXTRA_ARGS;
+  }
+
+  if (remove(args[1]) == 0) {
+      printf("Deleted file: %s\n", args[1]);
+      return 0;
+  } else {
+      return 99;
+  }
 }
 
 int cmd_touch(char **args){
-  print_args(args);
-  printf("Running touch\n");
+  FILE *fp = fopen(args[1], "a");
+  if (fp == NULL) {
+      return 99;
+  }
+
+  fclose(fp);
+  printf("Created file: %s\n", args[1]);
   return 0;
 }
 
 int cmd_type(char **args){
-  print_args(args);
-  printf("Running type\n");
+  if (count_args(args) < 1) {
+    return ERR_LACKING_ARGS;
+  }
+
+  if (count_args(args) > 1) {
+    return ERR_EXTRA_ARGS;
+  }
+
+  FILE *fp = fopen(args[1], "r");
+  if (!fp) {
+      return 99;
+  }
+
+  char buffer[1024];
+  while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+      printf("%s", buffer);
+  }
+
+  fclose(fp);
   return 0;
 }
 
